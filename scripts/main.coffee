@@ -9,14 +9,14 @@
 #   These are from the scripting documentation: https://github.com/github/hubot/blob/master/docs/scripting.md
 
 module.exports = (robot) ->
-  robot.hear /contributors/i, (res) ->
+  robot.hear /^contributors$/i, (res) ->
     robot.http("https://api.github.com/repos/Olivia-tou/TraRe/stats/contributors")
     .get() (err, response, body) ->
       # your code here
       result = ""
       items = JSON.parse(body)
       for item in items
-        result = result + "#{item.author.login}: #{item.total}\n"
+        result = result + "#{item.author.login}\ntotal commits: #{item.total}\n"
         i = 0
         for week in item.weeks
           result = result + "sprint #{i}\n    addition: #{week.a}\n    deletion: #{week.d}\n    commits: #{week.c}\n"
